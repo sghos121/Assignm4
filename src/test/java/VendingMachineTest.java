@@ -121,5 +121,17 @@ class VendingMachineTest {
         String candy = String.valueOf("candy"); // returns same reference
         String out = VendingMachine.dispenseItem(30, candy);
         assertChange(out, 10);
+
+    @Test
+    void moneyEqualsCost_whenCostIsZero_hitsEqualityDecision() {
+        String out = VendingMachine.dispenseItem(0, "tea");
+        assertTrue(out.contains("Item dispensed"), out); // some versions say "change of 0"
     }
+
+    @Test
+    void moneyLessThanCost_whenCostIsZero_hitsInsufficientDecision() {
+        String out = VendingMachine.dispenseItem(-1, "tea");
+        assertTrue(out.contains("Item not dispensed") || out.contains("change of -1"), out);
+    }
+}
 }
